@@ -45,7 +45,7 @@ const Index = () => {
               </Button>
               <Button variant="outline" size="lg" asChild>
                 <NavLink to="/categories">
-                  View Categories
+                  View Categories <ArrowRight className="ml-2 h-5 w-5" />
                 </NavLink>
               </Button>
             </div>
