@@ -2,18 +2,23 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAdmin } from "@/hooks/useAdmin";
 import logoImage from "@/assets/fitnessupps-logo.png";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { isAdminAuthenticated } = useAdmin();
 
-const navLinks = [
+  const baseNavLinks = [
     { name: "Home", href: "/" },
     { name: "Reviews", href: "/reviews" },
     { name: "Categories", href: "/categories" },
     { name: "Contact", href: "/contact" },
-    { name: "Admin", href: "/admin" },
   ];
+
+  const navLinks = isAdminAuthenticated 
+    ? [...baseNavLinks, { name: "Admin", href: "/admin" }]
+    : baseNavLinks;
 
   return (
     <nav className="bg-background border-b border-border sticky top-0 z-50 backdrop-blur-md bg-background/80">
