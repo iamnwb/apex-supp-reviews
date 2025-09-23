@@ -43,7 +43,7 @@ const Index = () => {
                   Browse Reviews <ArrowRight className="ml-2 h-5 w-5" />
                 </NavLink>
               </Button>
-              <Button variant="outline" size="lg" asChild>
+              <Button variant="hero" size="lg" asChild>
                 <NavLink to="/categories">
                   View Categories <ArrowRight className="ml-2 h-5 w-5" />
                 </NavLink>
