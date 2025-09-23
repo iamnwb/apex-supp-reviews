@@ -5,40 +5,38 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useAdmin } from '@/hooks/useAdmin';
 import { supabase } from '@/integrations/supabase/client';
 import { PlusCircle, FileText, Users, LogOut } from 'lucide-react';
-
 const AdminDashboard = () => {
-  const { isAdminAuthenticated, logout } = useAdmin();
+  const {
+    isAdminAuthenticated,
+    logout
+  } = useAdmin();
   const [stats, setStats] = useState({
     totalReviews: 0,
-    totalCategories: 0,
+    totalCategories: 0
   });
-
   useEffect(() => {
     fetchStats();
   }, []);
-
   const fetchStats = async () => {
     try {
-      const { data: reviews } = await supabase
-        .from('reviews')
-        .select('category');
-      
+      const {
+        data: reviews
+      } = await supabase.from('reviews').select('category');
       const totalReviews = reviews?.length || 0;
       const categories = new Set(reviews?.map(r => r.category));
       const totalCategories = categories.size;
-
-      setStats({ totalReviews, totalCategories });
+      setStats({
+        totalReviews,
+        totalCategories
+      });
     } catch (error) {
       console.error('Error fetching stats:', error);
     }
   };
-
   if (!isAdminAuthenticated) {
     return <Navigate to="/admin/login" replace />;
   }
-
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       <header className="border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
@@ -90,7 +88,7 @@ const AdminDashboard = () => {
                 </Button>
               </Link>
               <Link to="/admin/reviews">
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full my-[15px]">
                   <FileText className="w-4 h-4 mr-2" />
                   Manage Reviews
                 </Button>
@@ -112,7 +110,7 @@ const AdminDashboard = () => {
                 </Button>
               </Link>
               <Link to="/admin/images">
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full my-[15px]">
                   Manage Images
                 </Button>
               </Link>
@@ -120,8 +118,6 @@ const AdminDashboard = () => {
           </Card>
         </div>
       </main>
-    </div>
-  );
+    </div>;
 };
-
 export default AdminDashboard;
