@@ -127,7 +127,13 @@ const ReviewForm = () => {
       const readingTime = calculateReadingTime(formData.content);
 
       const reviewData = {
-        ...formData,
+        title: formData.title,
+        description: formData.description,
+        category: formData.category,
+        rating: formData.rating,
+        price: formData.price,
+        content: formData.content,
+        author: formData.author,
         slug,
         reading_time: readingTime,
         image: imageUrl,
@@ -299,7 +305,7 @@ const ReviewForm = () => {
                     min="0"
                     max="100"
                     value={formData.discountPercentage}
-                    onChange={(e) => setFormData(prev => ({ ...prev, discountPercentage: parseInt(e.target.value) || 0 }))}
+                    onChange={(e) => setFormData(prev => ({ ...prev, discountPercentage: e.target.value === '' ? 0 : parseInt(e.target.value) || 0 }))}
                     placeholder="25"
                   />
                 </div>
