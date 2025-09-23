@@ -1,5 +1,6 @@
 import matter from 'gray-matter';
 import { Review, ReviewMetadata } from '@/types/review';
+import { supabase } from '@/integrations/supabase/client';
 
 // Simple reading time calculation function
 function calculateReadingTime(text: string): string {
@@ -130,21 +131,70 @@ Look for Vitamin D3 (cholecalciferol) rather than D2. Take with fat for better a
 ];
 
 export async function getAllReviews(): Promise<Review[]> {
-  const reviews = mockReviews.map(({ slug, frontmatter, content }) => {
-    const readTime = calculateReadingTime(content);
-    
-    return {
-      slug,
-      ...frontmatter,
-      content,
-      readingTime: readTime,
-    } as Review;
-  });
+  try {
+    // Fetch from Supabase
+    const { data: supabaseReviews, error } = await supabase
+      .from('reviews')
+      .select('*')
+      .order('published_at', { ascending: false });
 
-  // Sort by published date (newest first)
-  return reviews.sort((a, b) => 
-    new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-  );
+    if (error) {
+      console.error('Error fetching reviews from Supabase:', error);
+    }
+
+    // Convert Supabase reviews to Review format
+    const convertedSupabaseReviews: Review[] = (supabaseReviews || []).map(review => ({
+      slug: review.slug,
+      title: review.title,
+      description: review.description,
+      category: review.category,
+      rating: review.rating,
+      pros: review.pros || [],
+      cons: review.cons || [],
+      price: review.price,
+      image: review.image || '',
+      publishedAt: review.published_at,
+      readingTime: review.reading_time || calculateReadingTime(review.content),
+      content: review.content,
+      author: review.author,
+    }));
+
+    // Calculate reading time for mock reviews
+    const mockReviewsWithReadingTime = mockReviews.map(({ slug, frontmatter, content }) => {
+      const readTime = calculateReadingTime(content);
+      
+      return {
+        slug,
+        ...frontmatter,
+        content,
+        readingTime: readTime,
+      } as Review;
+    });
+
+    // Combine and sort all reviews
+    const allReviews = [...convertedSupabaseReviews, ...mockReviewsWithReadingTime];
+    
+    return allReviews.sort((a, b) => 
+      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    );
+  } catch (error) {
+    console.error('Error in getAllReviews:', error);
+    // Fallback to mock data
+    const reviews = mockReviews.map(({ slug, frontmatter, content }) => {
+      const readTime = calculateReadingTime(content);
+      
+      return {
+        slug,
+        ...frontmatter,
+        content,
+        readingTime: readTime,
+      } as Review;
+    });
+
+    return reviews.sort((a, b) => 
+      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    );
+  }
 }
 
 export async function getReviewBySlug(slug: string): Promise<Review | null> {

@@ -11,29 +11,48 @@ import Categories from "./pages/Categories";
 import CategoryPage from "./pages/CategoryPage";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import { AdminProvider } from "./hooks/useAdmin";
+import AdminLogin from "./pages/admin/AdminLogin";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import ReviewForm from "./pages/admin/ReviewForm";
+import ReviewList from "./pages/admin/ReviewList";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Layout>
+    <AdminProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/reviews" element={<Reviews />} />
-            <Route path="/reviews/:slug" element={<ReviewDetail />} />
-            <Route path="/categories" element={<Categories />} />
-            <Route path="/categories/:category" element={<CategoryPage />} />
-            <Route path="/contact" element={<Contact />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
+            {/* Admin routes without Layout */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/reviews" element={<ReviewList />} />
+            <Route path="/admin/reviews/new" element={<ReviewForm />} />
+            <Route path="/admin/reviews/edit/:id" element={<ReviewForm />} />
+            
+            {/* Public routes with Layout */}
+            <Route path="/*" element={
+              <Layout>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/reviews" element={<Reviews />} />
+                  <Route path="/reviews/:slug" element={<ReviewDetail />} />
+                  <Route path="/categories" element={<Categories />} />
+                  <Route path="/categories/:category" element={<CategoryPage />} />
+                  <Route path="/contact" element={<Contact />} />
+                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Layout>
+            } />
           </Routes>
-        </Layout>
-      </BrowserRouter>
-    </TooltipProvider>
+        </BrowserRouter>
+      </TooltipProvider>
+    </AdminProvider>
   </QueryClientProvider>
 );
 

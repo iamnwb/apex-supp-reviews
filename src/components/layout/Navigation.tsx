@@ -7,11 +7,12 @@ import logoImage from "@/assets/fitnessupps-logo.png";
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const navLinks = [
+const navLinks = [
     { name: "Home", href: "/" },
     { name: "Reviews", href: "/reviews" },
     { name: "Categories", href: "/categories" },
     { name: "Contact", href: "/contact" },
+    { name: "Admin", href: "/admin" },
   ];
 
   return (
