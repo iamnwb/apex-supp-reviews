@@ -11,6 +11,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Navigate } from 'react-router-dom';
 import { ArrowLeft, Upload } from 'lucide-react';
+import MDEditor from '@uiw/react-md-editor';
 
 const ReviewForm = () => {
   const { isAdminAuthenticated } = useAdmin();
@@ -31,6 +32,9 @@ const ReviewForm = () => {
     content: '',
     author: 'Admin',
     image: '',
+    buyNowUrl: '',
+    discountPercentage: 0,
+    discountText: '',
   });
 
   useEffect(() => {
@@ -61,6 +65,9 @@ const ReviewForm = () => {
           content: review.content,
           author: review.author,
           image: review.image || '',
+          buyNowUrl: review.buy_now_url || '',
+          discountPercentage: review.discount_percentage || 0,
+          discountText: review.discount_text || '',
         });
       }
     } catch (error) {
@@ -126,6 +133,9 @@ const ReviewForm = () => {
         image: imageUrl,
         pros: formData.pros.filter(pro => pro.trim() !== ''),
         cons: formData.cons.filter(con => con.trim() !== ''),
+        buy_now_url: formData.buyNowUrl,
+        discount_percentage: formData.discountPercentage,
+        discount_text: formData.discountText,
       };
 
       if (id) {
@@ -270,6 +280,41 @@ const ReviewForm = () => {
                 </div>
               </div>
 
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="buyNowUrl">Buy Now URL</Label>
+                  <Input
+                    id="buyNowUrl"
+                    value={formData.buyNowUrl}
+                    onChange={(e) => setFormData(prev => ({ ...prev, buyNowUrl: e.target.value }))}
+                    placeholder="https://affiliate-link.com"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="discountPercentage">Discount Percentage</Label>
+                  <Input
+                    id="discountPercentage"
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={formData.discountPercentage}
+                    onChange={(e) => setFormData(prev => ({ ...prev, discountPercentage: parseInt(e.target.value) || 0 }))}
+                    placeholder="25"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="discountText">Discount Text</Label>
+                <Input
+                  id="discountText"
+                  value={formData.discountText}
+                  onChange={(e) => setFormData(prev => ({ ...prev, discountText: e.target.value }))}
+                  placeholder="Save up to 25% on Whey Protein"
+                />
+              </div>
+
               <div className="space-y-2">
                 <Label htmlFor="description">Description</Label>
                 <Textarea
@@ -344,14 +389,18 @@ const ReviewForm = () => {
 
               <div className="space-y-2">
                 <Label htmlFor="content">Review Content</Label>
-                <Textarea
-                  id="content"
-                  value={formData.content}
-                  onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
-                  rows={10}
-                  placeholder="Write your detailed review here..."
-                  required
-                />
+                <div className="min-h-[400px]">
+                  <MDEditor
+                    value={formData.content}
+                    onChange={(value) => setFormData(prev => ({ ...prev, content: value || '' }))}
+                    height={400}
+                    preview="edit"
+                    data-color-mode="light"
+                  />
+                </div>
+                <div className="text-sm text-muted-foreground mt-2">
+                  Use markdown formatting for headers (## H2, ### H3), **bold**, *italic*, lists, and links.
+                </div>
               </div>
 
               <div className="flex gap-4">
