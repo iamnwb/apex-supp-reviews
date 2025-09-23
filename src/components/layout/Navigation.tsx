@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logoImage from "@/assets/fitnessupps-logo.png";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,11 +20,12 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo Section */}
           <div className="flex items-center">
-            <NavLink to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">FS</span>
-              </div>
-              <span className="text-xl font-bold text-foreground">FitnessSupps</span>
+            <NavLink to="/" className="flex items-center">
+              <img 
+                src={logoImage} 
+                alt="FitnessSupps Logo" 
+                className="h-10 w-auto"
+              />
             </NavLink>
           </div>
 

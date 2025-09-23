@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Star, Shield, Zap } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import bannerImage from "@/assets/homepage-banner.png";
 
 const Index = () => {
   const features = [
@@ -23,8 +24,17 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
+      {/* Banner Section */}
+      <section className="relative h-96 bg-gradient-to-br from-primary/20 to-primary/10 overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${bannerImage})` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
+      </section>
+
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-background to-muted/30 py-20 px-4 sm:px-6 lg:px-8">
+      <section className="relative bg-gradient-to-br from-background to-muted/30 py-20 px-4 sm:px-6 lg:px-8 -mt-32 pt-32">
         <div className="max-w-7xl mx-auto">
           <div className="text-center animate-fade-in">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
