@@ -16,6 +16,8 @@ import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import ReviewForm from "./pages/admin/ReviewForm";
 import ReviewList from "./pages/admin/ReviewList";
+import ManageCategories from "./pages/admin/ManageCategories";
+import ManageImages from "./pages/admin/ManageImages";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +35,8 @@ const App = () => (
             <Route path="/admin/reviews" element={<ReviewList />} />
             <Route path="/admin/reviews/new" element={<ReviewForm />} />
             <Route path="/admin/reviews/edit/:id" element={<ReviewForm />} />
+            <Route path="/admin/categories" element={<ManageCategories />} />
+            <Route path="/admin/images" element={<ManageImages />} />
             
             {/* Public routes with Layout */}
             <Route path="/*" element={
