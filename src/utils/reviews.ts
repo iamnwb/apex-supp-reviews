@@ -1,6 +1,13 @@
 import matter from 'gray-matter';
-import readingTime from 'reading-time';
 import { Review, ReviewMetadata } from '@/types/review';
+
+// Simple reading time calculation function
+function calculateReadingTime(text: string): string {
+  const wordsPerMinute = 200; // Average reading speed
+  const words = text.trim().split(/\s+/).length;
+  const minutes = Math.ceil(words / wordsPerMinute);
+  return `${minutes} min read`;
+}
 
 // Mock reviews data - In a real app, you'd read from MDX files
 const mockReviews = [
@@ -124,13 +131,13 @@ Look for Vitamin D3 (cholecalciferol) rather than D2. Take with fat for better a
 
 export async function getAllReviews(): Promise<Review[]> {
   const reviews = mockReviews.map(({ slug, frontmatter, content }) => {
-    const readTime = readingTime(content);
+    const readTime = calculateReadingTime(content);
     
     return {
       slug,
       ...frontmatter,
       content,
-      readingTime: readTime.text,
+      readingTime: readTime,
     } as Review;
   });
 
