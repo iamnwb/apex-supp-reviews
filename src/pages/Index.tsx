@@ -26,7 +26,7 @@ const Index = () => {
       </section>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-b from-transparent via-background/50 to-background px-4 sm:px-6 lg:px-8 -mt-32 pt-32 my-0 py-[150px]">
+      <section className="relative bg-gradient-to-b from-transparent via-background/50 to-background px-4 sm:px-6 lg:px-8 -mt-32 pt-32 py-[49px] my-[93px]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center animate-fade-in">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
