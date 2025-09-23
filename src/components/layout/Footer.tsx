@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import logo from "@/assets/fitnessupps-logo.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -10,10 +11,11 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">FS</span>
-              </div>
-              <span className="text-xl font-bold text-foreground">FitnessSupps</span>
+              <img 
+                src={logo} 
+                alt="FitnessSupps Logo" 
+                className="h-8 w-auto"
+              />
             </div>
             <p className="text-muted-foreground max-w-md">
               Your trusted source for honest, science-backed supplement reviews. 
