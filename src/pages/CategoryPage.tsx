@@ -4,12 +4,13 @@ import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import ReviewCard from "@/components/reviews/ReviewCard";
 import CategorySidebar from "@/components/reviews/CategorySidebar";
-import { getReviewsByCategory, getCategories } from "@/utils/reviews";
+import { getReviewsByCategory, getCategories, getAllReviews } from "@/utils/reviews";
 import { Review } from "@/types/review";
 
 const CategoryPage = () => {
   const { category } = useParams<{ category: string }>();
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [allReviews, setAllReviews] = useState<Review[]>([]);
   const [allCategories, setAllCategories] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
@@ -19,13 +20,15 @@ const CategoryPage = () => {
       if (!category) return;
       
       try {
-        const [categoryReviews, categories] = await Promise.all([
+        const [categoryReviews, categories, allReviewsData] = await Promise.all([
           getReviewsByCategory(category),
-          getCategories()
+          getCategories(),
+          getAllReviews()
         ]);
         
         setReviews(categoryReviews);
         setAllCategories(categories);
+        setAllReviews(allReviewsData);
       } catch (error) {
         console.error("Error loading category data:", error);
       } finally {
@@ -41,9 +44,8 @@ const CategoryPage = () => {
     review.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const reviewCounts = allCategories.reduce((acc, cat) => {
-    // This is a simplified count - in a real app you'd get all reviews
-    acc[cat] = cat === category ? reviews.length : 0;
+  const reviewCounts = allReviews.reduce((acc, review) => {
+    acc[review.category] = (acc[review.category] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
 
