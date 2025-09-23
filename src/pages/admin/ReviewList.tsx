@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { useAdmin } from '@/hooks/useAdmin';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowLeft, Edit, Trash2, Plus } from 'lucide-react';
+import { ArrowLeft, Edit, Trash2, Plus, Eye } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const ReviewList = () => {
@@ -163,6 +163,11 @@ const ReviewList = () => {
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">
+                          <Link to={`/review/${review.slug}`}>
+                            <Button variant="outline" size="sm">
+                              <Eye className="w-4 h-4" />
+                            </Button>
+                          </Link>
                           <Link to={`/admin/reviews/edit/${review.id}`}>
                             <Button variant="outline" size="sm">
                               <Edit className="w-4 h-4" />
