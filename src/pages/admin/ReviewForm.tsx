@@ -328,12 +328,21 @@ const ReviewForm = () => {
 
               <div className="space-y-2">
                 <Label htmlFor="image">Image</Label>
-                <Input
-                  id="image"
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => setImageFile(e.target.files?.[0] || null)}
-                />
+                <div className="flex items-center gap-3">
+                  <label htmlFor="image" className="px-4 py-2 border border-input rounded-md bg-background hover:bg-accent hover:text-accent-foreground cursor-pointer transition-colors">
+                    Choose File
+                  </label>
+                  <span className="text-sm text-muted-foreground">
+                    {imageFile ? imageFile.name : "No file chosen"}
+                  </span>
+                  <input
+                    id="image"
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setImageFile(e.target.files?.[0] || null)}
+                    className="hidden"
+                  />
+                </div>
                 {formData.image && (
                   <img src={formData.image} alt="Current" className="mt-2 h-20 w-20 object-cover rounded" />
                 )}
