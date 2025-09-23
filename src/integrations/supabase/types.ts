@@ -38,11 +38,14 @@ export type Database = {
       reviews: {
         Row: {
           author: string
+          buy_now_url: string | null
           category: string
           cons: string[]
           content: string
           created_at: string | null
           description: string
+          discount_percentage: number | null
+          discount_text: string | null
           id: string
           image: string | null
           price: string
@@ -56,11 +59,14 @@ export type Database = {
         }
         Insert: {
           author?: string
+          buy_now_url?: string | null
           category: string
           cons?: string[]
           content: string
           created_at?: string | null
           description: string
+          discount_percentage?: number | null
+          discount_text?: string | null
           id?: string
           image?: string | null
           price: string
@@ -74,11 +80,14 @@ export type Database = {
         }
         Update: {
           author?: string
+          buy_now_url?: string | null
           category?: string
           cons?: string[]
           content?: string
           created_at?: string | null
           description?: string
+          discount_percentage?: number | null
+          discount_text?: string | null
           id?: string
           image?: string | null
           price?: string

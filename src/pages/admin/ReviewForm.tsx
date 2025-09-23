@@ -65,9 +65,9 @@ const ReviewForm = () => {
           content: review.content,
           author: review.author,
           image: review.image || '',
-          buyNowUrl: review.buy_now_url || '',
-          discountPercentage: review.discount_percentage || 0,
-          discountText: review.discount_text || '',
+          buyNowUrl: (review as any).buy_now_url || '',
+          discountPercentage: (review as any).discount_percentage || 0,
+          discountText: (review as any).discount_text || '',
         });
       }
     } catch (error) {
