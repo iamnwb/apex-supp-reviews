@@ -113,6 +113,28 @@ const ReviewDetail = () => {
           </div>
           <span>{new Date(review.publishedAt).toLocaleDateString()}</span>
         </div>
+        
+        {/* Primary CTA */}
+        <div className="mt-6">
+          <a
+            href={`https://example-store.com/products/${review.slug}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button variant="hero" className="mr-4">
+              Buy Now - {review.price}
+            </Button>
+          </a>
+          <a
+            href={`https://compare-prices.com/search?q=${encodeURIComponent(review.title)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button variant="outline">
+              Compare Prices
+            </Button>
+          </a>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -218,6 +240,62 @@ const ReviewDetail = () => {
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Category</span>
                   <span className="font-medium capitalize">{review.category}</span>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Sidebar CTA */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">Where to Buy</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <a
+                  href={`https://example-store.com/products/${review.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                >
+                  <Button variant="accent" className="w-full">
+                    Buy Now - {review.price}
+                  </Button>
+                </a>
+                
+                <div className="grid grid-cols-1 gap-2">
+                  <a
+                    href={`https://amazon.com/s?k=${encodeURIComponent(review.title)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block"
+                  >
+                    <Button variant="outline" size="sm" className="w-full">
+                      Amazon
+                    </Button>
+                  </a>
+                  <a
+                    href={`https://bodybuilding.com/store/search?searchTerm=${encodeURIComponent(review.title)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block"
+                  >
+                    <Button variant="outline" size="sm" className="w-full">
+                      Bodybuilding.com
+                    </Button>
+                  </a>
+                  <a
+                    href={`https://iherb.com/search?kw=${encodeURIComponent(review.title)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block"
+                  >
+                    <Button variant="outline" size="sm" className="w-full">
+                      iHerb
+                    </Button>
+                  </a>
+                </div>
+                
+                <div className="text-xs text-muted-foreground pt-2 border-t">
+                  * Prices may vary. Always compare before purchasing.
                 </div>
               </CardContent>
             </Card>

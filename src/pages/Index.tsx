@@ -86,8 +86,108 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Featured Products Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-foreground mb-4">
+              Top Rated Supplements
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Start with our highest-rated products, trusted by thousands
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-background rounded-lg p-6 shadow-card hover:shadow-hero transition-all duration-300">
+              <div className="aspect-square bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg mb-4 flex items-center justify-center">
+                <span className="text-4xl">🥛</span>
+              </div>
+              <h3 className="font-semibold text-lg mb-2">Premium Whey Protein</h3>
+              <div className="flex items-center mb-3">
+                {Array.from({ length: 5 }, (_, i) => (
+                  <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                ))}
+                <span className="ml-2 text-sm text-muted-foreground">4.8/5</span>
+              </div>
+              <p className="text-muted-foreground text-sm mb-4">
+                The gold standard for muscle building and recovery
+              </p>
+              <div className="flex gap-2">
+                <Button variant="accent" size="sm" className="flex-1" asChild>
+                  <a href="https://example-store.com/whey-protein" target="_blank" rel="noopener noreferrer">
+                    Buy Now - $45
+                  </a>
+                </Button>
+                <Button variant="outline" size="sm" asChild>
+                  <NavLink to="/reviews/optimum-nutrition-whey-protein">
+                    Review
+                  </NavLink>
+                </Button>
+              </div>
+            </div>
+
+            <div className="bg-background rounded-lg p-6 shadow-card hover:shadow-hero transition-all duration-300">
+              <div className="aspect-square bg-gradient-to-br from-orange-500/20 to-red-600/20 rounded-lg mb-4 flex items-center justify-center">
+                <span className="text-4xl">⚡</span>
+              </div>
+              <h3 className="font-semibold text-lg mb-2">Pre-Workout Energy</h3>
+              <div className="flex items-center mb-3">
+                {Array.from({ length: 5 }, (_, i) => (
+                  <Star key={i} className={`w-4 h-4 ${i < 4 ? "text-yellow-400 fill-current" : "text-gray-300"}`} />
+                ))}
+                <span className="ml-2 text-sm text-muted-foreground">4.2/5</span>
+              </div>
+              <p className="text-muted-foreground text-sm mb-4">
+                Clean energy and focus for intense workouts
+              </p>
+              <div className="flex gap-2">
+                <Button variant="accent" size="sm" className="flex-1" asChild>
+                  <a href="https://example-store.com/pre-workout" target="_blank" rel="noopener noreferrer">
+                    Buy Now - $29
+                  </a>
+                </Button>
+                <Button variant="outline" size="sm" asChild>
+                  <NavLink to="/reviews/c4-pre-workout-review">
+                    Review
+                  </NavLink>
+                </Button>
+              </div>
+            </div>
+
+            <div className="bg-background rounded-lg p-6 shadow-card hover:shadow-hero transition-all duration-300">
+              <div className="aspect-square bg-gradient-to-br from-green-500/20 to-green-600/20 rounded-lg mb-4 flex items-center justify-center">
+                <span className="text-4xl">💊</span>
+              </div>
+              <h3 className="font-semibold text-lg mb-2">Vitamin D3</h3>
+              <div className="flex items-center mb-3">
+                {Array.from({ length: 5 }, (_, i) => (
+                  <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                ))}
+                <span className="ml-2 text-sm text-muted-foreground">4.8/5</span>
+              </div>
+              <p className="text-muted-foreground text-sm mb-4">
+                Essential for immune support and bone health
+              </p>
+              <div className="flex gap-2">
+                <Button variant="accent" size="sm" className="flex-1" asChild>
+                  <a href="https://example-store.com/vitamin-d3" target="_blank" rel="noopener noreferrer">
+                    Buy Now - $15
+                  </a>
+                </Button>
+                <Button variant="outline" size="sm" asChild>
+                  <NavLink to="/reviews/vitamin-d3-benefits-review">
+                    Review
+                  </NavLink>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
-      <section className="bg-muted/30 py-16 px-4 sm:px-6 lg:px-8">
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold text-foreground mb-4">
             Ready to Find Your Perfect Supplement?
@@ -95,11 +195,18 @@ const Index = () => {
           <p className="text-lg text-muted-foreground mb-8">
             Browse our comprehensive reviews and make informed decisions about your fitness supplements.
           </p>
-          <Button variant="accent" size="lg" asChild>
-            <NavLink to="/reviews">
-              Start Reading Reviews <ArrowRight className="ml-2 h-5 w-5" />
-            </NavLink>
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button variant="accent" size="lg" asChild>
+              <NavLink to="/reviews">
+                Start Reading Reviews <ArrowRight className="ml-2 h-5 w-5" />
+              </NavLink>
+            </Button>
+            <Button variant="outline" size="lg" asChild>
+              <a href="https://example-store.com" target="_blank" rel="noopener noreferrer">
+                Shop All Products
+              </a>
+            </Button>
+          </div>
         </div>
       </section>
     </div>

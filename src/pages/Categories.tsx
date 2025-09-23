@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { getCategories, getAllReviews } from "@/utils/reviews";
 
 const Categories = () => {
@@ -122,11 +123,25 @@ const Categories = () => {
                     </Badge>
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    {info.description}
-                  </p>
-                </CardContent>
+              <CardContent>
+                <p className="text-muted-foreground mb-4">
+                  {info.description}
+                </p>
+                <div className="flex gap-2">
+                  <Button variant="outline" size="sm" className="flex-1">
+                    View Reviews
+                  </Button>
+                  <Button variant="accent" size="sm" asChild>
+                    <a 
+                      href={`https://example-store.com/category/${category}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Shop Now
+                    </a>
+                  </Button>
+                </div>
+              </CardContent>
               </Card>
             </NavLink>
           );

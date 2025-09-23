@@ -2,6 +2,7 @@ import { Star } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Review } from "@/types/review";
 
 interface ReviewCardProps {
@@ -67,10 +68,22 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
           {review.description}
         </p>
         
-        <div className="flex items-center justify-between text-sm text-muted-foreground">
+        <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
           <span>{review.readingTime}</span>
           <span>{new Date(review.publishedAt).toLocaleDateString()}</span>
         </div>
+        
+        {/* Buy Now Button */}
+        <a
+          href={`https://example-store.com/products/${review.slug}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block"
+        >
+          <Button variant="accent" size="sm" className="w-full">
+            Buy Now - {review.price}
+          </Button>
+        </a>
       </CardContent>
     </Card>
   );
