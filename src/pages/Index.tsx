@@ -22,13 +22,13 @@ const Index = () => {
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{
         backgroundImage: `url(${bannerImage})`
       }} />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background py-0 my-0" />
       </section>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-b from-transparent via-background/50 to-background px-4 sm:px-6 lg:px-8 -mt-32 pt-32 my-0 py-[200px]">
+      <section className="relative bg-gradient-to-b from-transparent via-background/50 to-background px-4 sm:px-6 lg:px-8 -mt-32 pt-32 my-0 py-px">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center animate-fade-in">
+          <div className="text-center animate-fade-in rounded-none my-0 py-[147px]">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
               Your <span className="text-primary">Trusted Source</span> for
               <br />Supplement Reviews
@@ -54,12 +54,10 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section className="px-4 sm:px-6 lg:px-8 my-0 py-px">
+      <section className="px-4 sm:px-6 lg:px-0 my-[2px] py-0">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-foreground mb-4">
-              Why Choose FitnessSupps?
-            </h2>
+          <div className="text-center mb-16 py-0 my-[3px]">
+            <h2 className="text-3xl font-bold text-foreground mb-4">Why Choose FitnesSupps?</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               We're committed to providing you with the most accurate and helpful 
               supplement information available.
