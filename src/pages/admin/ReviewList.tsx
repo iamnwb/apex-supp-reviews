@@ -9,6 +9,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, Edit, Trash2, Plus, Eye } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { ReviewPreviewDrawer } from '@/components/admin/ReviewPreviewDrawer';
 
 const ReviewList = () => {
   const { isAdminAuthenticated } = useAdmin();
@@ -16,6 +17,8 @@ const ReviewList = () => {
   const { toast } = useToast();
   const [reviews, setReviews] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [previewDrawerOpen, setPreviewDrawerOpen] = useState(false);
+  const [selectedReviewSlug, setSelectedReviewSlug] = useState<string | null>(null);
 
   useEffect(() => {
     fetchReviews();
@@ -68,6 +71,16 @@ const ReviewList = () => {
         variant: "destructive",
       });
     }
+  };
+
+  const handlePreviewReview = (reviewSlug: string) => {
+    setSelectedReviewSlug(reviewSlug);
+    setPreviewDrawerOpen(true);
+  };
+
+  const handleClosePreview = () => {
+    setPreviewDrawerOpen(false);
+    setSelectedReviewSlug(null);
   };
 
   if (!isAdminAuthenticated) {
@@ -163,11 +176,13 @@ const ReviewList = () => {
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">
-                          <Link to={`/review/${review.slug}`}>
-                            <Button variant="outline" size="sm">
-                              <Eye className="w-4 h-4" />
-                            </Button>
-                          </Link>
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => handlePreviewReview(review.slug)}
+                          >
+                            <Eye className="w-4 h-4" />
+                          </Button>
                           <Link to={`/admin/reviews/edit/${review.id}`}>
                             <Button variant="outline" size="sm">
                               <Edit className="w-4 h-4" />
@@ -190,6 +205,13 @@ const ReviewList = () => {
           </CardContent>
         </Card>
       </main>
+
+      <ReviewPreviewDrawer
+        isOpen={previewDrawerOpen}
+        onClose={handleClosePreview}
+        reviewSlug={selectedReviewSlug}
+        onDelete={deleteReview}
+      />
     </div>
   );
 };
