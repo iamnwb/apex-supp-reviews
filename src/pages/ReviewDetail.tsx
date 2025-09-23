@@ -114,24 +114,24 @@ const ReviewDetail = () => {
           <span>{new Date(review.publishedAt).toLocaleDateString()}</span>
         </div>
         
+        {/* Discount Banner */}
+        {review.discountPercentage && review.discountText && (
+          <div className="mt-6 p-4 rounded-2xl bg-[var(--discount-bg)] border border-[var(--discount-border)]">
+            <p className="text-lg font-semibold text-primary text-center">
+              💡 Save up to {review.discountPercentage}% on {review.discountText}
+            </p>
+          </div>
+        )}
+        
         {/* Primary CTA */}
         <div className="mt-6">
           <a
-            href={`https://example-store.com/products/${review.slug}`}
+            href={review.buyNowUrl || `https://example-store.com/products/${review.slug}`}
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Button variant="hero" className="mr-4">
+            <Button variant="default" className="rounded-xl font-semibold py-4 px-8 text-lg bg-primary hover:bg-primary-hover">
               Buy Now - {review.price}
-            </Button>
-          </a>
-          <a
-            href={`https://compare-prices.com/search?q=${encodeURIComponent(review.title)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Button variant="outline">
-              Compare Prices
             </Button>
           </a>
         </div>
@@ -244,59 +244,30 @@ const ReviewDetail = () => {
               </CardContent>
             </Card>
 
-            {/* Sidebar CTA */}
-            <Card>
+            {/* Simplified CTA */}
+            <Card className="rounded-2xl border-0 shadow-[var(--shadow-card)]">
               <CardHeader>
-                <CardTitle className="text-lg">Where to Buy</CardTitle>
+                <CardTitle className="text-xl font-bold">Get This Product</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
+              <CardContent className="space-y-4">
+                {review.discountPercentage && review.discountText && (
+                  <div className="p-3 rounded-xl bg-[var(--discount-bg)] border border-[var(--discount-border)]">
+                    <p className="text-sm font-medium text-primary text-center">
+                      💡 Save up to {review.discountPercentage}% on {review.discountText}
+                    </p>
+                  </div>
+                )}
+                
                 <a
-                  href={`https://example-store.com/products/${review.slug}`}
+                  href={review.buyNowUrl || `https://example-store.com/products/${review.slug}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block"
                 >
-                  <Button variant="accent" className="w-full">
+                  <Button variant="default" className="w-full rounded-xl font-semibold py-3 bg-primary hover:bg-primary-hover">
                     Buy Now - {review.price}
                   </Button>
                 </a>
-                
-                <div className="grid grid-cols-1 gap-2">
-                  <a
-                    href={`https://amazon.com/s?k=${encodeURIComponent(review.title)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block"
-                  >
-                    <Button variant="outline" size="sm" className="w-full">
-                      Amazon
-                    </Button>
-                  </a>
-                  <a
-                    href={`https://bodybuilding.com/store/search?searchTerm=${encodeURIComponent(review.title)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block"
-                  >
-                    <Button variant="outline" size="sm" className="w-full">
-                      Bodybuilding.com
-                    </Button>
-                  </a>
-                  <a
-                    href={`https://iherb.com/search?kw=${encodeURIComponent(review.title)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block"
-                  >
-                    <Button variant="outline" size="sm" className="w-full">
-                      iHerb
-                    </Button>
-                  </a>
-                </div>
-                
-                <div className="text-xs text-muted-foreground pt-2 border-t">
-                  * Prices may vary. Always compare before purchasing.
-                </div>
               </CardContent>
             </Card>
           </div>

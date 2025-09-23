@@ -26,61 +26,73 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
   };
 
   return (
-    <Card className="h-full hover:shadow-card transition-all duration-300 group overflow-hidden">
-      <div className="aspect-video bg-muted overflow-hidden">
+    <Card className="h-full group overflow-hidden bg-card shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] transition-all duration-500 border-0 rounded-2xl">
+      {/* Discount Banner */}
+      {review.discountPercentage && review.discountText && (
+        <div className="bg-[var(--discount-bg)] border-b border-[var(--discount-border)] px-6 py-3">
+          <p className="text-sm font-medium text-primary text-center">
+            Save up to {review.discountPercentage}% on {review.discountText}
+          </p>
+        </div>
+      )}
+      
+      <div className="aspect-[4/3] bg-muted overflow-hidden">
         {review.image ? (
           <img
             src={review.image}
             alt={review.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-            <span className="text-2xl font-bold text-muted-foreground">
+          <div className="w-full h-full bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
+            <span className="text-3xl font-light text-muted-foreground">
               {review.title.charAt(0)}
             </span>
           </div>
         )}
       </div>
       
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between mb-2">
-          <Badge variant="secondary" className="capitalize">
+      <CardHeader className="pb-4 pt-8 px-8">
+        <div className="flex items-center justify-between mb-6">
+          <Badge variant="secondary" className="capitalize font-medium text-xs px-3 py-1 rounded-full">
             {review.category}
           </Badge>
           <div className="flex items-center space-x-1">
             {renderStars(review.rating)}
-            <span className="text-sm text-muted-foreground ml-2">
+            <span className="text-lg font-semibold text-foreground ml-3">
               {review.rating}
             </span>
           </div>
         </div>
         
         <NavLink to={`/reviews/${review.slug}`}>
-          <h3 className="font-semibold text-lg leading-tight hover:text-primary transition-colors line-clamp-2">
+          <h3 className="font-bold text-xl leading-tight hover:text-primary transition-colors line-clamp-2 mb-4">
             {review.title}
           </h3>
         </NavLink>
-      </CardHeader>
-      
-      <CardContent className="pt-0">
-        <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
+        
+        <p className="text-muted-foreground text-base mb-6 line-clamp-3 leading-relaxed">
           {review.description}
         </p>
-        
-        <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
-          <span>{review.readingTime}</span>
+      </CardHeader>
+      
+      <CardContent className="pt-0 px-8 pb-8">
+        <div className="flex items-center justify-between text-sm text-muted-foreground mb-6">
+          <span className="flex items-center">
+            <span className="w-1 h-1 bg-muted-foreground rounded-full mr-2"></span>
+            {review.readingTime}
+          </span>
           <span>{new Date(review.publishedAt).toLocaleDateString()}</span>
         </div>
         
-        {/* Buy Now Button */}
+        {/* Single Buy Now Button */}
         <a
-          href={`https://example-store.com/products/${review.slug}`}
+          href={review.buyNowUrl || `https://example-store.com/products/${review.slug}`}
           target="_blank"
           rel="noopener noreferrer"
           className="block"
         >
-          <Button variant="accent" size="sm" className="w-full">
+          <Button variant="default" className="w-full rounded-xl font-semibold py-3 text-base bg-primary hover:bg-primary-hover">
             Buy Now - {review.price}
           </Button>
         </a>

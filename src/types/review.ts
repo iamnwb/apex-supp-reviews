@@ -12,6 +12,9 @@ export interface Review {
   readingTime: string;
   content: string;
   author: string;
+  buyNowUrl?: string;
+  discountPercentage?: number;
+  discountText?: string;
 }
 
 export interface ReviewMetadata {

@@ -24,7 +24,10 @@ const mockReviews = [
       price: '$55-65',
       image: '/images/on-whey-protein.jpg',
       publishedAt: '2024-01-15',
-      author: 'Mike Johnson'
+      author: 'Mike Johnson',
+      buyNowUrl: 'https://example-store.com/products/optimum-nutrition-whey-protein',
+      discountPercentage: 25,
+      discountText: 'Whey Protein'
     },
     content: `
 # The Gold Standard of Whey Protein
@@ -60,7 +63,10 @@ ON Gold Standard remains a reliable choice for serious athletes and fitness enth
       price: '$25-35',
       image: '/images/c4-pre-workout.jpg',
       publishedAt: '2024-01-10',
-      author: 'Sarah Chen'
+      author: 'Sarah Chen',
+      buyNowUrl: 'https://example-store.com/products/c4-pre-workout',
+      discountPercentage: 30,
+      discountText: 'Pre-Workout'
     },
     content: `
 # C4 Original: The Pre-Workout That Started It All
@@ -99,7 +105,10 @@ Perfect for moderate-intensity workouts and those new to pre-workout supplements
       price: '$10-25',
       image: '/images/vitamin-d3.jpg',
       publishedAt: '2024-01-05',
-      author: 'Dr. Emily Rodriguez'
+      author: 'Dr. Emily Rodriguez',
+      buyNowUrl: 'https://example-store.com/products/vitamin-d3',
+      discountPercentage: 15,
+      discountText: 'Vitamin D3'
     },
     content: `
 # The Sunshine Vitamin: Your Guide to Vitamin D3
