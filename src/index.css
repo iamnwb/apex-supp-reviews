@@ -40,7 +40,7 @@ All colors MUST be HSL.
     --ring: 101 54% 59%;
 
     /* Custom design tokens */
-    --gradient-footer: linear-gradient(135deg, hsl(0 0% 100%), hsl(101 54% 59%));
+    --gradient-footer: linear-gradient(180deg, hsl(0 0% 100%), hsl(101 54% 59%));
     --shadow-card: 0 1px 3px 0 hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
     --shadow-card-hover: 0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
     --shadow-hero: 0 20px 25px -5px hsl(101 54% 59% / 0.1), 0 8px 10px -6px hsl(101 54% 59% / 0.1);
@@ -98,7 +98,7 @@ All colors MUST be HSL.
     --input: 0 0% 15%;
     --ring: 101 54% 59%;
 
-    --gradient-footer: linear-gradient(135deg, hsl(0 0% 9%), hsl(101 54% 59% / 0.2));
+    --gradient-footer: linear-gradient(180deg, hsl(0 0% 9%), hsl(101 54% 59% / 0.2));
     --shadow-card: 0 1px 3px 0 hsl(0 0% 0% / 0.2), 0 1px 2px -1px hsl(0 0% 0% / 0.15);
     --shadow-card-hover: 0 10px 15px -3px hsl(0 0% 0% / 0.2), 0 4px 6px -4px hsl(0 0% 0% / 0.15);
     --shadow-hero: 0 20px 25px -5px hsl(101 54% 59% / 0.2), 0 8px 10px -6px hsl(101 54% 59% / 0.2);
