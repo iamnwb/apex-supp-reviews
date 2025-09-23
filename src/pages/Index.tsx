@@ -2,39 +2,31 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Star, Shield, Zap } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import bannerImage from "@/assets/homepage-banner.png";
-
 const Index = () => {
-  const features = [
-    {
-      icon: <Star className="h-8 w-8 text-primary" />,
-      title: "Honest Reviews",
-      description: "Unbiased, science-backed reviews from real users and experts"
-    },
-    {
-      icon: <Shield className="h-8 w-8 text-primary" />,
-      title: "Trusted Source",
-      description: "No sponsored content - just honest opinions you can trust"
-    },
-    {
-      icon: <Zap className="h-8 w-8 text-primary" />,
-      title: "Latest Updates",
-      description: "Stay updated with the newest supplements and formulations"
-    }
-  ];
-
-  return (
-    <div className="min-h-screen">
+  const features = [{
+    icon: <Star className="h-8 w-8 text-primary" />,
+    title: "Honest Reviews",
+    description: "Unbiased, science-backed reviews from real users and experts"
+  }, {
+    icon: <Shield className="h-8 w-8 text-primary" />,
+    title: "Trusted Source",
+    description: "No sponsored content - just honest opinions you can trust"
+  }, {
+    icon: <Zap className="h-8 w-8 text-primary" />,
+    title: "Latest Updates",
+    description: "Stay updated with the newest supplements and formulations"
+  }];
+  return <div className="min-h-screen">
       {/* Banner Section */}
       <section className="relative h-96 bg-gradient-to-br from-primary/20 to-primary/10 overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${bannerImage})` }}
-        />
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{
+        backgroundImage: `url(${bannerImage})`
+      }} />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
       </section>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-b from-transparent via-background/50 to-background py-20 px-4 sm:px-6 lg:px-8 -mt-32 pt-32">
+      <section className="relative bg-gradient-to-b from-transparent via-background/50 to-background px-4 sm:px-6 lg:px-8 -mt-32 pt-32 my-0 py-[150px]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center animate-fade-in">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
@@ -62,7 +54,7 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
+      <section className="px-4 sm:px-6 lg:px-8 my-0 py-px">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-foreground mb-4">
@@ -75,12 +67,9 @@ const Index = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <div 
-                key={index} 
-                className="text-center p-6 rounded-lg hover:shadow-card transition-all duration-300 animate-fade-in"
-                style={{ animationDelay: `${index * 0.2}s` }}
-              >
+            {features.map((feature, index) => <div key={index} className="text-center p-6 rounded-lg hover:shadow-card transition-all duration-300 animate-fade-in" style={{
+            animationDelay: `${index * 0.2}s`
+          }}>
                 <div className="flex justify-center mb-4">
                   {feature.icon}
                 </div>
@@ -90,8 +79,7 @@ const Index = () => {
                 <p className="text-muted-foreground">
                   {feature.description}
                 </p>
-              </div>
-            ))}
+              </div>)}
           </div>
         </div>
       </section>
@@ -115,9 +103,9 @@ const Index = () => {
               </div>
               <h3 className="font-semibold text-lg mb-2">Premium Whey Protein</h3>
               <div className="flex items-center mb-3">
-                {Array.from({ length: 5 }, (_, i) => (
-                  <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
-                ))}
+                {Array.from({
+                length: 5
+              }, (_, i) => <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />)}
                 <span className="ml-2 text-sm text-muted-foreground">4.8/5</span>
               </div>
               <p className="text-muted-foreground text-sm mb-4">
@@ -143,9 +131,9 @@ const Index = () => {
               </div>
               <h3 className="font-semibold text-lg mb-2">Pre-Workout Energy</h3>
               <div className="flex items-center mb-3">
-                {Array.from({ length: 5 }, (_, i) => (
-                  <Star key={i} className={`w-4 h-4 ${i < 4 ? "text-yellow-400 fill-current" : "text-gray-300"}`} />
-                ))}
+                {Array.from({
+                length: 5
+              }, (_, i) => <Star key={i} className={`w-4 h-4 ${i < 4 ? "text-yellow-400 fill-current" : "text-gray-300"}`} />)}
                 <span className="ml-2 text-sm text-muted-foreground">4.2/5</span>
               </div>
               <p className="text-muted-foreground text-sm mb-4">
@@ -171,9 +159,9 @@ const Index = () => {
               </div>
               <h3 className="font-semibold text-lg mb-2">Vitamin D3</h3>
               <div className="flex items-center mb-3">
-                {Array.from({ length: 5 }, (_, i) => (
-                  <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
-                ))}
+                {Array.from({
+                length: 5
+              }, (_, i) => <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />)}
                 <span className="ml-2 text-sm text-muted-foreground">4.8/5</span>
               </div>
               <p className="text-muted-foreground text-sm mb-4">
@@ -219,8 +207,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
