@@ -11,18 +11,28 @@ interface ReviewCardProps {
 
 const ReviewCard = ({ review }: ReviewCardProps) => {
   const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <Star
-        key={i}
-        className={`w-4 h-4 ${
-          i < Math.floor(rating)
-            ? "text-yellow-400 fill-current"
-            : i < rating
-            ? "text-yellow-400 fill-current opacity-50"
-            : "text-gray-300"
-        }`}
-      />
-    ));
+    return Array.from({ length: 5 }, (_, i) => {
+      const filled = i < Math.floor(rating);
+      const halfFilled = i < rating && i >= Math.floor(rating);
+      
+      return (
+        <div key={i} className="relative">
+          <Star
+            className={`w-4 h-4 ${
+              filled ? "text-yellow-400 fill-current" : "text-gray-300"
+            }`}
+          />
+          {halfFilled && (
+            <Star
+              className="w-4 h-4 text-yellow-400 fill-current absolute top-0 left-0"
+              style={{
+                clipPath: 'polygon(0 0, 50% 0, 50% 100%, 0 100%)'
+              }}
+            />
+          )}
+        </div>
+      );
+    });
   };
 
   return (

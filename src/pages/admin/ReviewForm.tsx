@@ -268,8 +268,9 @@ const ReviewForm = () => {
                     type="number"
                     min="1"
                     max="5"
+                    step="0.1"
                     value={formData.rating}
-                    onChange={(e) => setFormData(prev => ({ ...prev, rating: parseInt(e.target.value) }))}
+                    onChange={(e) => setFormData(prev => ({ ...prev, rating: parseFloat(e.target.value) || 1 }))}
                     required
                   />
                 </div>
