@@ -63,18 +63,44 @@ const ManageImages = () => {
   const uploadImage = async (file: File) => {
     if (!file) return;
 
+    // Import validation function
+    const { validateFileUpload } = await import('@/utils/validation');
+    
+    // Validate file
+    const validation = validateFileUpload(file);
+    if (!validation.isValid) {
+      toast({
+        title: "Validation Error",
+        description: validation.message,
+        variant: "destructive",
+      });
+      return;
+    }
+
     setUploading(true);
     
     try {
-      const fileName = `${Date.now()}-${file.name}`;
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+      const filePath = `uploads/${fileName}`;
       
       const { error: uploadError } = await supabase.storage
         .from('review-images')
-        .upload(fileName, file);
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: false
+        });
 
       if (uploadError) {
         throw uploadError;
       }
+
+      // Log admin action
+      await supabase.rpc('log_admin_action', {
+        p_action: 'image_upload',
+        p_resource_type: 'review_image',
+        p_details: { fileName, filePath, fileSize: file.size }
+      });
 
       toast({
         title: "Success",
@@ -87,7 +113,7 @@ const ManageImages = () => {
       console.error('Error uploading image:', error);
       toast({
         title: "Error",
-        description: "Failed to upload image",
+        description: error instanceof Error ? error.message : "Failed to upload image",
         variant: "destructive",
       });
     } finally {
@@ -105,6 +131,13 @@ const ManageImages = () => {
         if (error) {
           throw error;
         }
+
+        // Log admin action
+        await supabase.rpc('log_admin_action', {
+          p_action: 'image_delete',
+          p_resource_type: 'review_image',
+          p_details: { fileName }
+        });
 
         toast({
           title: "Success",

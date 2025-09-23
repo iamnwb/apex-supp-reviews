@@ -95,25 +95,69 @@ const ReviewForm = () => {
   };
 
   const uploadImage = async (file: File): Promise<string> => {
+    // Validate file
+    const { validateFileUpload } = await import('@/utils/validation');
+    const validation = validateFileUpload(file);
+    
+    if (!validation.isValid) {
+      throw new Error(validation.message);
+    }
+
     const fileExt = file.name.split('.').pop();
-    const fileName = `${Date.now()}.${fileExt}`;
+    const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
     const filePath = `reviews/${fileName}`;
 
     const { error: uploadError } = await supabase.storage
       .from('review-images')
-      .upload(filePath, file);
+      .upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: false
+      });
 
-    if (uploadError) throw uploadError;
+    if (uploadError) {
+      throw uploadError;
+    }
 
     const { data } = supabase.storage
       .from('review-images')
       .getPublicUrl(filePath);
+
+    // Log admin action
+    await supabase.rpc('log_admin_action', {
+      p_action: 'image_upload',
+      p_resource_type: 'review_image',
+      p_details: { fileName, filePath }
+    });
 
     return data.publicUrl;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Import validation utilities
+    const { sanitizeInput, validateSlug } = await import('@/utils/validation');
+    
+    // Validate required fields
+    if (!formData.title || !formData.category || !formData.rating || !formData.price || !formData.description || !formData.content) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate rating range
+    if (formData.rating < 1 || formData.rating > 5) {
+      toast({
+        title: "Error",
+        description: "Rating must be between 1 and 5",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -124,24 +168,31 @@ const ReviewForm = () => {
       }
 
       const slug = generateSlug(formData.title);
+      
+      // Validate generated slug
+      if (!validateSlug(slug)) {
+        throw new Error('Generated slug is invalid. Please check the title.');
+      }
+
       const readingTime = calculateReadingTime(formData.content);
 
+      // Sanitize all text inputs
       const reviewData = {
-        title: formData.title,
-        description: formData.description,
-        category: formData.category,
+        title: sanitizeInput(formData.title),
+        description: sanitizeInput(formData.description),
+        category: sanitizeInput(formData.category),
         rating: formData.rating,
-        price: formData.price,
-        content: formData.content,
-        author: formData.author,
+        price: sanitizeInput(formData.price),
+        content: sanitizeInput(formData.content),
+        author: sanitizeInput(formData.author),
         slug,
         reading_time: readingTime,
         image: imageUrl,
-        pros: formData.pros.filter(pro => pro.trim() !== ''),
-        cons: formData.cons.filter(con => con.trim() !== ''),
-        buy_now_url: formData.buyNowUrl,
+        pros: formData.pros.filter(pro => pro.trim() !== '').map(pro => sanitizeInput(pro)),
+        cons: formData.cons.filter(con => con.trim() !== '').map(con => sanitizeInput(con)),
+        buy_now_url: formData.buyNowUrl ? sanitizeInput(formData.buyNowUrl) : null,
         discount_percentage: formData.discountPercentage,
-        discount_text: formData.discountText,
+        discount_text: formData.discountText ? sanitizeInput(formData.discountText) : null,
       };
 
       if (id) {
@@ -151,17 +202,35 @@ const ReviewForm = () => {
           .eq('id', id);
         
         if (error) throw error;
+
+        // Log admin action
+        await supabase.rpc('log_admin_action', {
+          p_action: 'review_update',
+          p_resource_type: 'review',
+          p_resource_id: id,
+          p_details: { title: reviewData.title }
+        });
         
         toast({
           title: "Success",
           description: "Review updated successfully",
         });
       } else {
-        const { error } = await supabase
+        const { data, error } = await supabase
           .from('reviews')
-          .insert([reviewData]);
+          .insert([reviewData])
+          .select('id')
+          .single();
         
         if (error) throw error;
+
+        // Log admin action
+        await supabase.rpc('log_admin_action', {
+          p_action: 'review_create',
+          p_resource_type: 'review',
+          p_resource_id: data.id,
+          p_details: { title: reviewData.title }
+        });
         
         toast({
           title: "Success",
@@ -174,7 +243,7 @@ const ReviewForm = () => {
       console.error('Error saving review:', error);
       toast({
         title: "Error",
-        description: "Failed to save review",
+        description: error instanceof Error ? error.message : "Failed to save review",
         variant: "destructive",
       });
     } finally {
