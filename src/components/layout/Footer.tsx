@@ -68,7 +68,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-border/50 mt-8 pt-8 text-center">
+        <div className="mt-8 pt-8 text-center">
           <p className="text-muted-foreground text-sm">
             © {currentYear} FitnesSupps. All rights reserved.
           </p>
