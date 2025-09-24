@@ -169,6 +169,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_create_admin_profile: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
       get_admin_role: {
         Args: { user_uuid: string }
         Returns: Database["public"]["Enums"]["admin_role"]
