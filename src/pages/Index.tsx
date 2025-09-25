@@ -112,7 +112,7 @@ const Index = () => {
               <div className="flex gap-2">
                 <Button variant="accent" size="sm" className="flex-1" asChild>
                   <a href="https://example-store.com/whey-protein" target="_blank" rel="noopener noreferrer">
-                    Buy Now - $45
+                    Buy Now
                   </a>
                 </Button>
                 <Button variant="outline" size="sm" asChild>
