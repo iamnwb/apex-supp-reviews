@@ -139,9 +139,7 @@ const Index = () => {
               </p>
               <div className="flex gap-2">
                 <Button variant="accent" size="sm" className="flex-1" asChild>
-                  <a href="https://example-store.com/pre-workout" target="_blank" rel="noopener noreferrer">
-                    Buy Now - $29
-                  </a>
+                  <a href="https://example-store.com/pre-workout" target="_blank" rel="noopener noreferrer">Buy Now</a>
                 </Button>
                 <Button variant="outline" size="sm" asChild>
                   <NavLink to="/reviews/c4-pre-workout-review">
@@ -167,9 +165,7 @@ const Index = () => {
               </p>
               <div className="flex gap-2">
                 <Button variant="accent" size="sm" className="flex-1" asChild>
-                  <a href="https://example-store.com/vitamin-d3" target="_blank" rel="noopener noreferrer">
-                    Buy Now - $15
-                  </a>
+                  <a href="https://example-store.com/vitamin-d3" target="_blank" rel="noopener noreferrer">Buy Now</a>
                 </Button>
                 <Button variant="outline" size="sm" asChild>
                   <NavLink to="/reviews/vitamin-d3-benefits-review">
