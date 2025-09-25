@@ -33,10 +33,7 @@ const Index = () => {
               Your <span className="text-primary">Trusted Source</span> for
               <br />Supplement Reviews
             </h1>
-            <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-              Get honest, science-backed reviews of the latest fitness supplements. 
-              Make informed decisions for your fitness journey with our expert analysis.
-            </p>
+            <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">Get honest, science-backed reviews of the latest fitness supplements. Make informed decisions for your fitness journey with our expert analysis.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up">
               <Button variant="hero" size="lg" asChild>
                 <NavLink to="/reviews">
