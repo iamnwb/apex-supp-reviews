@@ -26,9 +26,9 @@ const Index = () => {
       </section>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-b from-transparent via-background/50 to-background px-4 sm:px-6 lg:px-8 -mt-32 pt-32 my-0 py-px">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center animate-fade-in rounded-none my-0 py-[147px]">
+      <section className="absolute inset-0 flex items-start pt-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background/40 via-background/60 to-background">
+        <div className="max-w-7xl mx-auto w-full">
+          <div className="text-center animate-fade-in backdrop-blur-sm bg-background/30 rounded-lg p-8 px-0 py-[20px]">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
               Your <span className="text-primary">Trusted Source</span> for
               <br />Supplement Reviews
