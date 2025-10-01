@@ -52,9 +52,9 @@ ON Gold Standard remains a reliable choice for serious athletes and fitness enth
     `
   },
   {
-    slug: 'Test-Kubi',
+    slug: 'optimum-nutrition-whey-protein',
     frontmatter: {
-      title: 'Optimum Nutrition Gold Standard 100% Whey Protein Review',
+      title: 'Test-Kubi',
       description: 'A comprehensive review of ON Gold Standard Whey - the industry standard for protein supplements.',
       category: 'protein',
       rating: 4.5,
