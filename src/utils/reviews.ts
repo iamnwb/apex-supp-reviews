@@ -52,6 +52,45 @@ ON Gold Standard remains a reliable choice for serious athletes and fitness enth
     `
   },
   {
+    slug: 'Test-Kubi',
+    frontmatter: {
+      title: 'Optimum Nutrition Gold Standard 100% Whey Protein Review',
+      description: 'A comprehensive review of ON Gold Standard Whey - the industry standard for protein supplements.',
+      category: 'protein',
+      rating: 4.5,
+      pros: ['High-quality whey isolate', 'Great taste and mixability', 'Trusted brand', 'Good amino acid profile'],
+      cons: ['Higher price point', 'Contains artificial sweeteners'],
+      price: '$55-65',
+      image: '/images/on-whey-protein.jpg',
+      publishedAt: '2024-01-15',
+      author: 'Mike Johnson',
+      buyNowUrl: 'https://example-store.com/products/optimum-nutrition-whey-protein',
+      discountPercentage: 25,
+      discountText: 'Whey Protein'
+    },
+    content: `
+# The Gold Standard of Whey Protein
+
+Optimum Nutrition's Gold Standard 100% Whey has been a staple in the fitness community for decades. But does it live up to the hype in 2024?
+
+## What Makes It Special
+
+This whey protein blend combines whey protein isolate, whey protein concentrate, and whey peptides to deliver 24g of protein per serving. The formula is designed for rapid absorption and muscle recovery.
+
+## Taste and Mixability
+
+The Double Rich Chocolate flavor mixes incredibly well with just water, creating a smooth, creamy shake without any chalky residue. The taste is genuinely impressive for a protein powder.
+
+## Value for Money
+
+While not the cheapest option on the market, the quality justifies the price point. You're paying for a premium product with consistent quality control.
+
+## Final Verdict
+
+ON Gold Standard remains a reliable choice for serious athletes and fitness enthusiasts. The combination of quality, taste, and brand reputation makes it worth the investment.
+    `
+  },
+  {
     slug: 'c4-pre-workout-review',
     frontmatter: {
       title: 'Cellucor C4 Original Pre-Workout Review',
