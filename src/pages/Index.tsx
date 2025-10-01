@@ -26,14 +26,14 @@ const Index = () => {
       </section>
 
       {/* Hero Section */}
-      <section className="absolute inset-0 flex items-start pt-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background/40 via-background/60 to-background">
+      <section className="absolute inset-0 flex items-start pt-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-transparent via-transparent to-background">
         <div className="max-w-7xl mx-auto w-full">
-          <div className="text-center animate-fade-in backdrop-blur-sm bg-background/30 rounded-lg p-8">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-              Your <span className="text-primary">Trusted Source</span> for
+          <div className="text-center animate-fade-in backdrop-blur-md bg-background/90 rounded-lg p-8 shadow-2xl">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground mb-6 drop-shadow-lg">
+              Your <span className="text-primary drop-shadow-lg">Trusted Source</span> for
               <br />Supplement Reviews
             </h1>
-            <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">Get honest, science-backed reviews of the latest fitness supplements. Make informed decisions for your fitness journey with our expert analysis.</p>
+            <p className="text-xl text-foreground/80 font-medium mb-8 max-w-3xl mx-auto drop-shadow-md">Get honest, science-backed reviews of the latest fitness supplements. Make informed decisions for your fitness journey with our expert analysis.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up">
               <Button variant="hero" size="lg" asChild>
                 <NavLink to="/reviews">
