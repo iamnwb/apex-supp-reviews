@@ -1,12 +1,22 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  type ReactNode,
+} from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { User, Session } from '@supabase/supabase-js';
+import { type User, type Session } from '@supabase/supabase-js';
+import type { Database } from '@/integrations/supabase/types';
+
+type AdminProfileRow = Database['public']['Tables']['admin_profiles']['Row'];
+type AdminLogDetails = Database['public']['Tables']['admin_audit_logs']['Insert']['details'];
 
 interface AdminContextType {
   isAdminAuthenticated: boolean;
   user: User | null;
   session: Session | null;
-  adminProfile: any | null;
+  adminProfile: AdminProfileRow | null;
   login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   signup: (email: string, password: string, displayName?: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
@@ -19,56 +29,52 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
-  const [adminProfile, setAdminProfile] = useState<any | null>(null);
+  const [adminProfile, setAdminProfile] = useState<AdminProfileRow | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Set up auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        
-        if (session?.user) {
-          // Check if user is an admin
-          const { data: profile, error } = await supabase
-            .from('admin_profiles')
-            .select('*')
-            .eq('user_id', session.user.id)
-            .maybeSingle();
-          
-          if (profile && !error) {
-            setAdminProfile(profile);
-            setIsAdminAuthenticated(true);
-            
-            // Log admin login
-            setTimeout(() => {
-              supabase.rpc('log_admin_action', {
-                p_action: 'admin_login',
-                p_details: { timestamp: new Date().toISOString() }
-              });
-            }, 0);
-          } else {
-            setAdminProfile(null);
-            setIsAdminAuthenticated(false);
-          }
+    const handleSession = async (nextSession: Session | null) => {
+      setSession(nextSession);
+      setUser(nextSession?.user ?? null);
+
+      if (nextSession?.user) {
+        const { data: profile, error } = await supabase
+          .from('admin_profiles')
+          .select('*')
+          .eq('user_id', nextSession.user.id)
+          .maybeSingle<AdminProfileRow>();
+
+        if (error) {
+          console.error('Failed to load admin profile', error);
+        }
+
+        if (profile && !error) {
+          setAdminProfile(profile);
+          setIsAdminAuthenticated(true);
+
+          setTimeout(() => {
+            void supabase.rpc('log_admin_action', {
+              p_action: 'admin_login',
+              p_details: { timestamp: new Date().toISOString() } satisfies AdminLogDetails,
+            });
+          }, 0);
         } else {
           setAdminProfile(null);
           setIsAdminAuthenticated(false);
         }
-        
-        setLoading(false);
+      } else {
+        setAdminProfile(null);
+        setIsAdminAuthenticated(false);
       }
-    );
 
-    // Check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      if (!session) {
-        setLoading(false);
-      }
+      setLoading(false);
+    };
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      void handleSession(session);
     });
+
+    void supabase.auth.getSession().then(({ data }) => handleSession(data.session));
 
     return () => subscription.unsubscribe();
   }, []);
@@ -90,7 +96,7 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
           .from('admin_profiles')
           .select('*')
           .eq('user_id', data.user.id)
-          .maybeSingle();
+          .maybeSingle<AdminProfileRow>();
 
         if (!profile || profileError) {
           await supabase.auth.signOut();
@@ -151,9 +157,9 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
     try {
       // Log admin logout
       if (user) {
-        supabase.rpc('log_admin_action', {
+        void supabase.rpc('log_admin_action', {
           p_action: 'admin_logout',
-          p_details: { timestamp: new Date().toISOString() }
+          p_details: { timestamp: new Date().toISOString() } satisfies AdminLogDetails,
         });
       }
       

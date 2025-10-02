@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,8 +10,28 @@ import { useAdmin } from '@/hooks/useAdmin';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Navigate } from 'react-router-dom';
-import { ArrowLeft, Upload } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import MDEditor from '@uiw/react-md-editor';
+import type { Database } from '@/integrations/supabase/types';
+
+type ReviewRow = Database['public']['Tables']['reviews']['Row'];
+type ReviewInsert = Database['public']['Tables']['reviews']['Insert'];
+
+type ReviewFormState = {
+  title: string;
+  description: string;
+  category: string;
+  rating: number;
+  pros: string[];
+  cons: string[];
+  price: string;
+  content: string;
+  author: string;
+  image: string;
+  buyNowUrl: string;
+  discountPercentage: number;
+  discountText: string;
+};
 
 const ReviewForm = () => {
   const { isAdminAuthenticated } = useAdmin();
@@ -21,7 +41,7 @@ const ReviewForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
   
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ReviewFormState>({
     title: '',
     description: '',
     category: '',
@@ -37,19 +57,13 @@ const ReviewForm = () => {
     discountText: '',
   });
 
-  useEffect(() => {
-    if (id) {
-      fetchReview();
-    }
-  }, [id]);
-
-  const fetchReview = async () => {
+  const fetchReview = useCallback(async (reviewId: string) => {
     try {
       const { data: review, error } = await supabase
         .from('reviews')
         .select('*')
-        .eq('id', id)
-        .single();
+        .eq('id', reviewId)
+        .maybeSingle<ReviewRow>();
 
       if (error) throw error;
 
@@ -65,9 +79,9 @@ const ReviewForm = () => {
           content: review.content,
           author: review.author,
           image: review.image || '',
-          buyNowUrl: (review as any).buy_now_url || '',
-          discountPercentage: (review as any).discount_percentage || 0,
-          discountText: (review as any).discount_text || '',
+          buyNowUrl: review.buy_now_url ?? '',
+          discountPercentage: review.discount_percentage ?? 0,
+          discountText: review.discount_text ?? '',
         });
       }
     } catch (error) {
@@ -78,7 +92,13 @@ const ReviewForm = () => {
         variant: "destructive",
       });
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    if (id) {
+      void fetchReview(id);
+    }
+  }, [fetchReview, id]);
 
   const generateSlug = (title: string) => {
     return title
@@ -177,7 +197,7 @@ const ReviewForm = () => {
       const readingTime = calculateReadingTime(formData.content);
 
       // Sanitize all text inputs
-      const reviewData = {
+      const reviewData: ReviewInsert = {
         title: sanitizeInput(formData.title),
         description: sanitizeInput(formData.description),
         category: sanitizeInput(formData.category),
@@ -187,11 +207,15 @@ const ReviewForm = () => {
         author: sanitizeInput(formData.author),
         slug,
         reading_time: readingTime,
-        image: imageUrl,
-        pros: formData.pros.filter(pro => pro.trim() !== '').map(pro => sanitizeInput(pro)),
-        cons: formData.cons.filter(con => con.trim() !== '').map(con => sanitizeInput(con)),
+        image: imageUrl || null,
+        pros: formData.pros
+          .filter((pro) => pro.trim() !== '')
+          .map((pro) => sanitizeInput(pro)),
+        cons: formData.cons
+          .filter((con) => con.trim() !== '')
+          .map((con) => sanitizeInput(con)),
         buy_now_url: formData.buyNowUrl ? sanitizeInput(formData.buyNowUrl) : null,
-        discount_percentage: formData.discountPercentage,
+        discount_percentage: formData.discountPercentage || null,
         discount_text: formData.discountText ? sanitizeInput(formData.discountText) : null,
       };
 
@@ -208,7 +232,7 @@ const ReviewForm = () => {
           p_action: 'review_update',
           p_resource_type: 'review',
           p_resource_id: id,
-          p_details: { title: reviewData.title }
+          p_details: { title: reviewData.title },
         });
         
         toast({
@@ -220,7 +244,7 @@ const ReviewForm = () => {
           .from('reviews')
           .insert([reviewData])
           .select('id')
-          .single();
+          .maybeSingle<Pick<ReviewRow, 'id'>>();
         
         if (error) throw error;
 
@@ -228,8 +252,8 @@ const ReviewForm = () => {
         await supabase.rpc('log_admin_action', {
           p_action: 'review_create',
           p_resource_type: 'review',
-          p_resource_id: data.id,
-          p_details: { title: reviewData.title }
+          p_resource_id: data?.id ?? null,
+          p_details: { title: reviewData.title },
         });
         
         toast({
@@ -420,7 +444,13 @@ const ReviewForm = () => {
                   />
                 </div>
                 {formData.image && (
-                  <img src={formData.image} alt="Current" className="mt-2 h-20 w-20 object-cover rounded" />
+                  <img
+                    src={formData.image}
+                    alt="Current"
+                    loading="lazy"
+                    decoding="async"
+                    className="mt-2 h-20 w-20 object-cover rounded"
+                  />
                 )}
               </div>
 

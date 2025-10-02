@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,28 +7,16 @@ import { useAdmin } from '@/hooks/useAdmin';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, Upload, Trash2, Download, Eye } from 'lucide-react';
-
-interface StorageFile {
-  name: string;
-  id: string;
-  updated_at: string;
-  created_at: string;
-  last_accessed_at: string;
-  metadata: Record<string, any>;
-}
+import type { FileObject } from '@supabase/storage-js';
 
 const ManageImages = () => {
   const { isAdminAuthenticated } = useAdmin();
-  const [images, setImages] = useState<StorageFile[]>([]);
+  const [images, setImages] = useState<FileObject[]>([]);
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  useEffect(() => {
-    fetchImages();
-  }, []);
-
-  const fetchImages = async () => {
+  const fetchImages = useCallback(async () => {
     try {
       const { data, error } = await supabase.storage
         .from('review-images')
@@ -58,7 +46,11 @@ const ManageImages = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    void fetchImages();
+  }, [fetchImages]);
 
   const uploadImage = async (file: File) => {
     if (!file) return;
@@ -108,7 +100,7 @@ const ManageImages = () => {
       });
 
       // Refresh the images list
-      fetchImages();
+      await fetchImages();
     } catch (error) {
       console.error('Error uploading image:', error);
       toast({
@@ -121,12 +113,27 @@ const ManageImages = () => {
     }
   };
 
-  const deleteImage = async (fileName: string) => {
-    if (window.confirm(`Are you sure you want to delete "${fileName}"?`)) {
+  const toStoragePath = (file: FileObject): string => {
+    if (file.name.includes('/')) {
+      return file.name;
+    }
+
+    if (file.id) {
+      const [, ...rest] = file.id.split('/');
+      if (rest.length > 0) {
+        return rest.join('/');
+      }
+    }
+
+    return file.name;
+  };
+
+  const deleteImage = async (filePath: string) => {
+    if (window.confirm(`Are you sure you want to delete "${filePath}"?`)) {
       try {
         const { error } = await supabase.storage
           .from('review-images')
-          .remove([fileName]);
+          .remove([filePath]);
 
         if (error) {
           throw error;
@@ -136,7 +143,7 @@ const ManageImages = () => {
         await supabase.rpc('log_admin_action', {
           p_action: 'image_delete',
           p_resource_type: 'review_image',
-          p_details: { fileName }
+          p_details: { fileName: filePath }
         });
 
         toast({
@@ -145,7 +152,7 @@ const ManageImages = () => {
         });
 
         // Refresh the images list
-        fetchImages();
+        await fetchImages();
       } catch (error) {
         console.error('Error deleting image:', error);
         toast({
@@ -157,22 +164,29 @@ const ManageImages = () => {
     }
   };
 
-  const getImageUrl = (fileName: string) => {
+  const getImageUrl = (file: FileObject) => {
+    const path = toStoragePath(file);
     const { data } = supabase.storage
       .from('review-images')
-      .getPublicUrl(fileName);
+      .getPublicUrl(path);
     return data.publicUrl;
   };
 
   const formatFileSize = (bytes: number) => {
-    if (bytes === 0) return '0 Bytes';
+    if (!Number.isFinite(bytes) || bytes <= 0) {
+      return '0 Bytes';
+    }
+
     const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    const units = ['Bytes', 'KB', 'MB', 'GB'];
+    const unitIndex = Math.min(units.length - 1, Math.floor(Math.log(bytes) / Math.log(k)));
+    const prettySize = bytes / Math.pow(k, unitIndex);
+
+    return `${prettySize.toFixed(unitIndex === 0 ? 0 : 2)} ${units[unitIndex]}`;
   };
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString: string | null) => {
+    if (!dateString) return '—';
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
@@ -249,60 +263,71 @@ const ManageImages = () => {
                 <p className="text-muted-foreground">No images found.</p>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {images.map((image) => (
-                    <div key={image.id} className="border rounded-lg p-4 space-y-4">
-                      <div className="aspect-video bg-muted rounded-lg overflow-hidden">
+                  {images.map((image) => {
+                    const storagePath = toStoragePath(image);
+                    const publicUrl = getImageUrl(image);
+                    const rawSize = image.metadata?.size;
+                    const fileSize = typeof rawSize === 'number' ? rawSize : Number(rawSize ?? 0);
+                    const mimeType = image.metadata?.mimetype ?? 'Unknown';
+                    const displayName = storagePath.split('/').pop() ?? storagePath;
+
+                    return (
+                      <div key={image.id} className="border rounded-lg p-4 space-y-4">
+                        <div className="aspect-video bg-muted rounded-lg overflow-hidden">
                         <img
-                          src={getImageUrl(image.name)}
-                          alt={image.name}
+                          src={publicUrl}
+                          alt={displayName}
+                          loading="lazy"
+                          decoding="async"
                           className="w-full h-full object-cover"
                         />
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <h3 className="font-medium text-sm truncate" title={image.name}>
-                          {image.name}
-                        </h3>
-                        <div className="text-xs text-muted-foreground space-y-1">
-                          <div>Size: {formatFileSize(image.metadata?.size || 0)}</div>
-                          <div>Type: {image.metadata?.mimetype || 'Unknown'}</div>
-                          <div>Uploaded: {formatDate(image.created_at)}</div>
+                        </div>
+
+                        <div className="space-y-2">
+                          <h3 className="font-medium text-sm truncate" title={storagePath}>
+                            {displayName}
+                          </h3>
+                          <div className="text-xs text-muted-foreground space-y-1">
+                            <div>Size: {formatFileSize(fileSize)}</div>
+                            <div>Type: {mimeType}</div>
+                            <div>Uploaded: {formatDate(image.created_at)}</div>
+                          </div>
+                        </div>
+
+                        <div className="flex gap-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => window.open(publicUrl, '_blank')}
+                            className="flex-1"
+                          >
+                            <Eye className="w-3 h-3 mr-1" />
+                            View
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              const link = document.createElement('a');
+                              link.href = publicUrl;
+                              link.download = displayName;
+                              link.click();
+                            }}
+                          >
+                            <Download className="w-3 h-3" />
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => deleteImage(storagePath)}
+                            className="text-destructive hover:text-destructive"
+                          >
+                            <Trash2 className="w-3 h-3" />
+                          </Button>
                         </div>
                       </div>
-
-                      <div className="flex gap-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => window.open(getImageUrl(image.name), '_blank')}
-                          className="flex-1"
-                        >
-                          <Eye className="w-3 h-3 mr-1" />
-                          View
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => {
-                            const link = document.createElement('a');
-                            link.href = getImageUrl(image.name);
-                            link.download = image.name;
-                            link.click();
-                          }}
-                        >
-                          <Download className="w-3 h-3" />
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => deleteImage(image.name)}
-                          className="text-destructive hover:text-destructive"
-                        >
-                          <Trash2 className="w-3 h-3" />
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </CardContent>

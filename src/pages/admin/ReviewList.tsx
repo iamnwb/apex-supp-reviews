@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -10,21 +10,21 @@ import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, Edit, Trash2, Plus, Eye } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { ReviewPreviewDrawer } from '@/components/admin/ReviewPreviewDrawer';
+import type { Database } from '@/integrations/supabase/types';
+
+type ReviewRow = Database['public']['Tables']['reviews']['Row'];
+type ReviewRowKey = ReviewRow['id'];
 
 const ReviewList = () => {
   const { isAdminAuthenticated } = useAdmin();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [reviews, setReviews] = useState<any[]>([]);
+  const [reviews, setReviews] = useState<ReviewRow[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [previewDrawerOpen, setPreviewDrawerOpen] = useState(false);
   const [selectedReviewSlug, setSelectedReviewSlug] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchReviews();
-  }, []);
-
-  const fetchReviews = async () => {
+  const fetchReviews = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from('reviews')
@@ -43,9 +43,13 @@ const ReviewList = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [toast]);
 
-  const deleteReview = async (id: string) => {
+  useEffect(() => {
+    void fetchReviews();
+  }, [fetchReviews]);
+
+  const deleteReview = async (id: ReviewRowKey) => {
     if (!confirm('Are you sure you want to delete this review?')) {
       return;
     }
@@ -140,65 +144,73 @@ const ReviewList = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {reviews.map((review) => (
-                    <TableRow key={review.id}>
-                      <TableCell className="font-medium">
-                        <div className="flex items-center gap-3">
+                  {reviews.map((review) => {
+                    const createdAt = review.created_at
+                      ? new Date(review.created_at).toLocaleDateString()
+                      : '—';
+                    const roundedRating = Math.min(5, Math.max(0, Math.round(review.rating)));
+                    const starDisplay = '★'.repeat(roundedRating).padEnd(5, '☆');
+
+                    return (
+                      <TableRow key={review.id}>
+                        <TableCell className="font-medium">
+                          <div className="flex items-center gap-3">
                           {review.image && (
                             <img 
                               src={review.image} 
                               alt={review.title}
+                              loading="lazy"
+                              decoding="async"
                               className="w-10 h-10 object-cover rounded"
                             />
                           )}
-                          <div>
-                            <div className="font-medium">{review.title}</div>
-                            <div className="text-sm text-muted-foreground">
-                              {review.description.substring(0, 50)}...
+                            <div>
+                              <div className="font-medium">{review.title}</div>
+                              <div className="text-sm text-muted-foreground">
+                                {review.description.substring(0, 50)}...
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="secondary">{review.category}</Badge>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center">
-                          {'★'.repeat(review.rating)}
-                          <span className="ml-1 text-sm text-muted-foreground">
-                            ({review.rating}/5)
-                          </span>
-                        </div>
-                      </TableCell>
-                      <TableCell>{review.author}</TableCell>
-                      <TableCell>
-                        {new Date(review.created_at).toLocaleDateString()}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          <Button 
-                            variant="outline" 
-                            size="sm"
-                            onClick={() => handlePreviewReview(review.slug)}
-                          >
-                            <Eye className="w-4 h-4" />
-                          </Button>
-                          <Link to={`/admin/reviews/edit/${review.id}`}>
-                            <Button variant="outline" size="sm">
-                              <Edit className="w-4 h-4" />
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="secondary">{review.category}</Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center">
+                            <span aria-hidden>{starDisplay}</span>
+                            <span className="ml-2 text-sm text-muted-foreground">
+                              {review.rating.toFixed(1)}/5
+                            </span>
+                          </div>
+                        </TableCell>
+                        <TableCell>{review.author}</TableCell>
+                        <TableCell>{createdAt}</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handlePreviewReview(review.slug)}
+                            >
+                              <Eye className="w-4 h-4" />
                             </Button>
-                          </Link>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => deleteReview(review.id)}
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                            <Link to={`/admin/reviews/edit/${review.id}`}>
+                              <Button variant="outline" size="sm">
+                                <Edit className="w-4 h-4" />
+                              </Button>
+                            </Link>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => deleteReview(review.id)}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             )}

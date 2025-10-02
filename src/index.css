@@ -22,15 +22,15 @@ All colors MUST be HSL.
     --primary-foreground: 0 0% 100%;
     --primary-hover: 101 54% 54%; /* Slightly darker green */
 
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 13%;
+    --secondary: 0 0% 97%;
+    --secondary-foreground: 0 0% 20%;
 
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 0 0% 97%;
+    --muted-foreground: 0 0% 40%;
 
-    --accent: 211 100% 50%; /* #007AFF */
+    --accent: 101 54% 59%;
     --accent-foreground: 0 0% 100%;
-    --accent-hover: 211 100% 45%; /* Slightly darker blue */
+    --accent-hover: 101 54% 54%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
@@ -40,10 +40,9 @@ All colors MUST be HSL.
     --ring: 101 54% 59%;
 
     /* Custom design tokens */
-    --gradient-footer: linear-gradient(180deg, hsl(0 0% 100%), hsl(101 54% 59%));
+    --gradient-footer: linear-gradient(180deg, hsl(0 0% 100%), hsl(101 54% 59% / 0.2));
     --shadow-card: 0 1px 3px 0 hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
     --shadow-card-hover: 0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
-    --shadow-hero: 0 20px 25px -5px hsl(101 54% 59% / 0.1), 0 8px 10px -6px hsl(101 54% 59% / 0.1);
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --discount-bg: hsl(101 54% 59% / 0.1);
     --discount-border: hsl(101 54% 59% / 0.2);
@@ -87,9 +86,9 @@ All colors MUST be HSL.
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 65%;
 
-    --accent: 211 100% 50%;
+    --accent: 101 54% 59%;
     --accent-foreground: 0 0% 100%;
-    --accent-hover: 211 100% 45%;
+    --accent-hover: 101 54% 54%;
 
     --destructive: 0 63% 31%;
     --destructive-foreground: 0 0% 100%;
@@ -101,7 +100,6 @@ All colors MUST be HSL.
     --gradient-footer: linear-gradient(180deg, hsl(0 0% 9%), hsl(101 54% 59% / 0.2));
     --shadow-card: 0 1px 3px 0 hsl(0 0% 0% / 0.2), 0 1px 2px -1px hsl(0 0% 0% / 0.15);
     --shadow-card-hover: 0 10px 15px -3px hsl(0 0% 0% / 0.2), 0 4px 6px -4px hsl(0 0% 0% / 0.15);
-    --shadow-hero: 0 20px 25px -5px hsl(101 54% 59% / 0.2), 0 8px 10px -6px hsl(101 54% 59% / 0.2);
     --discount-bg: hsl(101 54% 59% / 0.15);
     --discount-border: hsl(101 54% 59% / 0.25);
     --sidebar-background: 240 5.9% 10%;
@@ -126,11 +124,11 @@ All colors MUST be HSL.
 
   /* Custom link styles */
   .link-primary {
-    @apply text-foreground transition-all duration-300 relative;
+    @apply text-primary font-medium transition-colors duration-300 relative;
   }
 
   .link-primary:hover {
-    @apply text-primary;
+    @apply text-primary/80;
   }
 
   .link-primary:hover::after {
@@ -138,7 +136,7 @@ All colors MUST be HSL.
   }
 
   .link-primary::after {
-    @apply content-[''] absolute bottom-0 left-0 w-full h-0.5 bg-primary scale-x-0 transition-transform duration-300 origin-left;
+    @apply content-[''] absolute bottom-0 left-0 w-full h-0.5 bg-primary/40 scale-x-0 transition-transform duration-300 origin-left;
   }
 
   /* Smooth scrolling */

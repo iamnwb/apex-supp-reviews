@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -21,11 +21,7 @@ const ManageCategories = () => {
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
-
-  const fetchCategories = async () => {
+  const fetchCategories = useCallback(async () => {
     try {
       const { data: reviews } = await supabase
         .from('reviews')
@@ -55,7 +51,11 @@ const ManageCategories = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    void fetchCategories();
+  }, [fetchCategories]);
 
   const addCategory = async () => {
     if (!newCategory.trim()) {
@@ -104,7 +104,7 @@ const ManageCategories = () => {
     }
 
     if (window.confirm(`Are you sure you want to delete the category "${categoryName}"?`)) {
-      setCategories(categories.filter(cat => cat.name !== categoryName));
+      setCategories(prev => prev.filter(cat => cat.name !== categoryName));
       
       toast({
         title: "Success",

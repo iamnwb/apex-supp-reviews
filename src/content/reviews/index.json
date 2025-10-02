@@ -1,0 +1,263 @@
+[
+  {
+    "title": "Gundry MD Bio Complete 3 Review",
+    "subtitle": "Triple-biotic gut support with pre-, pro-, and postbiotics",
+    "brand": "Gundry MD",
+    "productName": "Bio Complete 3",
+    "category": "gut-health",
+    "rating": 4,
+    "priceRange": "$49.95–$69.95",
+    "skuUrl": "https://gundrymd.com/p/bio-complete-3/",
+    "amazonUrl": "https://www.amazon.com/Gundry-MD%C2%AE-Bio-Complete-Postbiotic/dp/B0CHC9MMR1",
+    "brandUrl": "https://gundrymd.com/p/bio-complete-3/",
+    "images": [
+      "https://images.examplecdn.com/gundry-bio-complete-3/hero-placeholder.jpg",
+      "https://images.examplecdn.com/gundry-bio-complete-3/pack-shot-placeholder.jpg"
+    ],
+    "lastUpdated": "2024-03-21T00:00:00.000Z",
+    "author": "FitnessSupps Editorial",
+    "reviewerCredentials": [
+      "Reviewed by [Name], BSc Nutrition — TODO"
+    ],
+    "disclaimers": [
+      "Information only — not medical advice.",
+      "Contains affiliate links — we may earn a commission."
+    ],
+    "keyClaims": [
+      "Triple-biotic formula: prebiotic + probiotic + postbiotic",
+      "2B CFU per serving of mixed strains",
+      "Includes CoreBiome® tributyrin (postbiotic butyrate source)",
+      "Low-dose prebiotic blend compared with common studied intakes"
+    ],
+    "ingredients": [
+      {
+        "name": "Sunfiber® (PHGG) + Acacia Gum",
+        "amount": 450,
+        "units": "mg",
+        "claimedBenefit": "Prebiotic fibre for regularity and satiety",
+        "evidenceLevel": "Mixed",
+        "summary": "PHGG and acacia are supported by human data for stool form and GI comfort, but common studied doses are several grams per day — higher than this label blend.",
+        "citations": [
+          3,
+          7,
+          9,
+          16,
+          21
+        ]
+      },
+      {
+        "name": "Bacillus coagulans (ProDURA®) + Bifidobacterium bifidum (UABb-10)",
+        "amount": 2,
+        "units": "billion CFU",
+        "claimedBenefit": "Probiotic blend for digestive comfort",
+        "evidenceLevel": "Mixed",
+        "summary": "2B CFU per 2-capsule serving confirmed to reviewers; strain-level benefits vary, evidence for general digestive symptoms is reasonable, weight control claims are weaker.",
+        "citations": [
+          1
+        ]
+      },
+      {
+        "name": "Tributyrin (CoreBiome®)",
+        "amount": 300,
+        "units": "mg",
+        "claimedBenefit": "Postbiotic butyrate source for gut barrier and motility",
+        "evidenceLevel": "Mixed",
+        "summary": "Butyrate physiology is well supported; human data on oral tributyrin is growing but still limited; dose appears within safe, studied ranges.",
+        "citations": [
+          5,
+          6,
+          12,
+          15,
+          20,
+          25
+        ]
+      }
+    ],
+    "pros": [
+      "Covers pre-, pro- and postbiotic in one capsule pair",
+      "Includes branded CoreBiome® and Sunfiber®",
+      "Once-daily two-capsule dosing is convenient",
+      "90-day money-back guarantee from brand"
+    ],
+    "cons": [
+      "Prebiotic blend is only 450 mg — far below common 3–10 g study ranges",
+      "Premium price versus multi-ingredient competitors",
+      "CFU count not shown on label — transparency downside"
+    ],
+    "bestFor": [
+      "Digestive comfort seekers",
+      "People who prefer once-daily dosing",
+      "Those interested in butyrate support"
+    ],
+    "avoidIf": [
+      "Severe IBS flare — introduce fibre cautiously",
+      "On specialist advice that restricts probiotics",
+      "Budget is top priority"
+    ],
+    "dosage": "2 capsules once daily, preferably before a meal",
+    "timing": "Take before a main meal. If sensitive, start with 1 capsule for 3–7 days.",
+    "sideEffects": [
+      "Temporary gas, bloating, loose stools during adjustment"
+    ],
+    "warnings": [
+      "Consult a clinician if immunocompromised",
+      "Stop if persistent GI discomfort"
+    ],
+    "priceTable": [
+      {
+        "size": "30-day",
+        "servings": "30",
+        "rrp": "$69.95",
+        "bestObserved": "$49.95",
+        "pricePerServing": "$1.67"
+      }
+    ],
+    "alternatives": [
+      {
+        "name": "Peak Performance Synbiotic",
+        "summary": "Pre+pro+postbiotic without some fillers",
+        "link": "https://peakperformance.com",
+        "priceRange": "$34–$40"
+      },
+      {
+        "name": "Core Nutritionals Core GUT",
+        "summary": "Higher Sunfiber® dose with GI focus",
+        "link": "https://corenutritionals.com",
+        "priceRange": "$44–$55"
+      },
+      {
+        "name": "Sandhu’s GUT Health",
+        "summary": "Comparable triple-biotic format at lower price per serving",
+        "link": "https://sandhus.com",
+        "priceRange": "$30–$40"
+      }
+    ],
+    "faq": [
+      {
+        "q": "How long until I notice changes?",
+        "a": "GI comfort changes often appear within 1–2 weeks. Full fibre benefits can take 3–4 weeks."
+      },
+      {
+        "q": "Can I take it with coffee or food?",
+        "a": "Brand suggests before a meal. If sensitive, take with a small snack."
+      },
+      {
+        "q": "Do I still need a separate fibre supplement?",
+        "a": "If you aim for study-like intakes, you may add dietary fibre to reach 3–10 g per day."
+      },
+      {
+        "q": "Is Bio Complete 3 suitable alongside antibiotics?",
+        "a": "Check with your clinician; spacing probiotics a few hours from antibiotics is common advice."
+      },
+      {
+        "q": "Does CoreBiome® cause cravings or weight changes?",
+        "a": "Evidence for appetite or weight control is early-stage — manage expectations and monitor response."
+      }
+    ],
+    "references": [
+      {
+        "id": 1,
+        "authors": "Innerbody Editorial",
+        "year": 2025,
+        "title": "Bio Complete 3 Review",
+        "journal": "Innerbody",
+        "url": "https://www.innerbody.com/bio-complete-3-reviews"
+      },
+      {
+        "id": 3,
+        "authors": "Yasukawa Z et al.",
+        "year": 2019,
+        "title": "PHGG improves stool form via microbiota",
+        "journal": "Nutrients",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6769658/"
+      },
+      {
+        "id": 5,
+        "authors": "Smith M et al.",
+        "year": 2024,
+        "title": "Tributyrin supplementation tolerability and effects",
+        "journal": "Nutrition and Healthy Aging",
+        "url": "https://doi.org/10.3233/NHA-240005"
+      },
+      {
+        "id": 6,
+        "authors": "Yang N et al.",
+        "year": 2023,
+        "title": "Tributyrin alleviates dysbiosis",
+        "journal": "Frontiers/PMC",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10389721/"
+      },
+      {
+        "id": 7,
+        "authors": "Abe A et al.",
+        "year": 2023,
+        "title": "PHGG suppresses mucolytic bacteria",
+        "journal": "J Clin Biochem Nutr",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10017317/"
+      },
+      {
+        "id": 9,
+        "authors": "Kapoor MP et al.",
+        "year": 2023,
+        "title": "PHGG benefits to skin moisture",
+        "journal": "J Funct Foods in Health and Disease / Elsevier",
+        "url": "https://www.sciencedirect.com/science/article/pii/S1756464623000944"
+      },
+      {
+        "id": 12,
+        "authors": "ClinicalTrials.gov",
+        "year": 2024,
+        "title": "Tributyrin time course and efficacy",
+        "journal": "NCT06501898",
+        "url": "https://clinicaltrials.gov/study/NCT06501898"
+      },
+      {
+        "id": 15,
+        "authors": "WithPower registry",
+        "year": 2024,
+        "title": "Tributyrin PK and outcomes trial",
+        "journal": "WithPower",
+        "url": "https://www.withpower.com/trial/phase-metabolite-concentration-7-2024-86e90"
+      },
+      {
+        "id": 16,
+        "authors": "Nestlé Health Science (white paper)",
+        "year": 2019,
+        "title": "PHGG safety and dosing rationale",
+        "journal": "NHS PDF",
+        "url": "https://www.nestlehealthscience.com/.../scientific_rationale_nhs_products_with_phgg_for_gut_health.pdf"
+      },
+      {
+        "id": 20,
+        "authors": "Journal of Exercise & Nutrition",
+        "year": 2025,
+        "title": "PK of sodium butyrate vs tributyrin vs lysine butyrate",
+        "journal": "JEN",
+        "url": "https://www.journalofexerciseandnutrition.com/index.php/JEN/article/download/189/171/836"
+      },
+      {
+        "id": 21,
+        "authors": "Taiyo Sunfiber",
+        "year": 2024,
+        "title": "Sunfiber benefits at 3–6 g",
+        "journal": "Industry summary",
+        "url": "https://www.taiyointernational.com/news/sunfiber/published-study-determines-sunfiber-has-significant-prebiotic-benefits-even-at-3g-doses/"
+      },
+      {
+        "id": 25,
+        "authors": "TODO",
+        "year": 2024,
+        "title": "Tributyrin outcomes registry update — TODO",
+        "journal": "TODO",
+        "url": "https://example.com/tributyrin-registry-todo"
+      }
+    ],
+    "categoryLabel": "Gut Health",
+    "description": "Convenient triple-biotic with CoreBiome® tributyrin; fibre dose stays on the lighter side.",
+    "price": "$49.95–$69.95",
+    "buyNowUrl": "https://gundrymd.com/p/bio-complete-3/",
+    "image": "https://images.examplecdn.com/gundry-bio-complete-3/hero-placeholder.jpg",
+    "readingTime": "9 min read",
+    "slug": "gundry-bio-complete-3"
+  }
+]

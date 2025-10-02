@@ -5,74 +5,44 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gradient-footer mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand Section */}
-          <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
-              <img 
-                src={logo} 
-                alt="FitnessSupps Logo" 
-                className="h-8 w-auto"
-              />
-            </div>
-            <p className="text-muted-foreground max-w-md">
-              Your trusted source for honest, science-backed supplement reviews. 
-              Helping you make informed decisions about your fitness journey.
-            </p>
+    <footer className="relative mt-24 overflow-hidden bg-[#F8FAFC]">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white via-white/90 to-transparent" />
+      <div className="mx-auto flex max-w-7xl flex-col gap-12 px-4 pb-16 pt-12 sm:px-6 lg:flex-row lg:items-start lg:justify-between lg:px-8">
+        <div className="max-w-md text-slate-600">
+          <div className="flex items-center gap-3">
+            <img
+              src={logo}
+              alt="FitnessSupps Logo"
+              width={150}
+              height={52}
+              loading="lazy"
+              decoding="async"
+              className="h-12 w-auto"
+            />
           </div>
-
-          {/* Quick Links */}
-          <div>
-            <h3 className="font-semibold text-foreground mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li>
-                <NavLink to="/reviews" className="text-muted-foreground hover:text-primary transition-colors">
-                  Latest Reviews
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/categories" className="text-muted-foreground hover:text-primary transition-colors">
-                  Categories
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/contact" className="text-muted-foreground hover:text-primary transition-colors">
-                  Contact Us
-                </NavLink>
-              </li>
-            </ul>
-          </div>
-
-          {/* Categories */}
-          <div>
-            <h3 className="font-semibold text-foreground mb-4">Categories</h3>
-            <ul className="space-y-2">
-              <li>
-                <NavLink to="/categories/protein" className="text-muted-foreground hover:text-primary transition-colors">
-                  Protein
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/categories/pre-workout" className="text-muted-foreground hover:text-primary transition-colors">
-                  Pre-Workout
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/categories/vitamins" className="text-muted-foreground hover:text-primary transition-colors">
-                  Vitamins
-                </NavLink>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="mt-8 pt-8 text-center">
-          <p className="text-muted-foreground text-sm">
-            © {currentYear} FitnesSupps. All rights reserved.
+          <p className="mt-4 text-sm leading-relaxed">
+            Science-backed reviews to help you choose supplements with clarity and confidence.
           </p>
+          <p className="mt-6 text-xs text-slate-400">© {currentYear} FitnesSupps. All rights reserved.</p>
         </div>
+
+        <nav aria-label="Footer" className="flex flex-wrap gap-4 text-sm text-slate-600">
+          {[
+            { label: "Reviews", href: "/reviews" },
+            { label: "Categories", href: "/categories" },
+            { label: "Contact", href: "/contact" },
+            { label: "Disclosures", href: "/disclosures" },
+            { label: "Privacy", href: "/privacy" },
+          ].map((item) => (
+            <NavLink
+              key={item.label}
+              to={item.href}
+              className="rounded-full px-3 py-2 transition hover:text-[#77C464] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#77C464]/40"
+            >
+              {item.label}
+            </NavLink>
+          ))}
+        </nav>
       </div>
     </footer>
   );
