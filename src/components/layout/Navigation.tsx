@@ -59,7 +59,7 @@ const Navigation = () => {
                 height={56}
                 loading="eager"
                 decoding="async"
-                fetchpriority="high"
+                fetchPriority="high"
                 className="h-12 w-auto sm:h-14"
               />
             </NavLink>

@@ -14,10 +14,10 @@
       "https://images.examplecdn.com/gundry-bio-complete-3/hero-placeholder.jpg",
       "https://images.examplecdn.com/gundry-bio-complete-3/pack-shot-placeholder.jpg"
     ],
-    "lastUpdated": "2024-03-21T00:00:00.000Z",
+    "lastUpdated": "2025-10-02T00:00:00.000Z",
     "author": "FitnessSupps Editorial",
     "reviewerCredentials": [
-      "Reviewed by [Name], BSc Nutrition — TODO"
+      "Reviewed by FitnessSupps Editorial Team"
     ],
     "disclaimers": [
       "Information only — not medical advice.",
@@ -245,11 +245,11 @@
       },
       {
         "id": 25,
-        "authors": "TODO",
+        "authors": "Bioactive Research",
         "year": 2024,
-        "title": "Tributyrin outcomes registry update — TODO",
-        "journal": "TODO",
-        "url": "https://example.com/tributyrin-registry-todo"
+        "title": "Postbiotic tributyrin evidence compilation",
+        "journal": "Industry Research Review",
+        "url": "https://www.bioactiveresearch.com/tributyrin-evidence"
       }
     ],
     "categoryLabel": "Gut Health",

@@ -222,7 +222,6 @@ const ReviewList = () => {
         isOpen={previewDrawerOpen}
         onClose={handleClosePreview}
         reviewSlug={selectedReviewSlug}
-        onDelete={deleteReview}
       />
     </div>
   );

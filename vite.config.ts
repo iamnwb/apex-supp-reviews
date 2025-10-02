@@ -7,17 +7,11 @@ import { componentTagger } from "lovable-tagger";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
-  port: 5173,
-  strictPort: true,
+    port: 8080,
   },
   plugins: [
     mdx(),
-    react({
-      include: [
-        /\.[tj]sx?$/,
-        /\.mdx$/,
-      ],
-    }),
+    react(),
     mode === "development" && componentTagger(),
   ].filter(Boolean),
   resolve: {

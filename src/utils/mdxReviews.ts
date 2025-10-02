@@ -41,3 +41,27 @@ export const getMdxReviewBySlug = (slug: string): MdxReviewEntry | null =>
   mdxEntries.find((entry) => entry.slug === slug) ?? null;
 
 export const listMdxReviews = (): MdxReviewEntry[] => [...mdxEntries];
+
+export const getMdxReviewSummaries = () => {
+  return mdxEntries.map((entry) => {
+    const fm = entry.frontmatter as Record<string, unknown>;
+    return {
+      slug: entry.slug,
+      title: (fm.title as string) ?? "",
+      description: (fm.description as string) ?? "",
+      category: (fm.category as string) ?? "",
+      rating: (fm.rating as number) ?? 0,
+      pros: (fm.pros as string[]) ?? [],
+      cons: (fm.cons as string[]) ?? [],
+      price: (fm.price as string) ?? "",
+      image: (fm.image as string) ?? "",
+      publishedAt: (fm.publishedAt as string) ?? new Date().toISOString(),
+      readingTime: (fm.readingTime as string) ?? "5 min read",
+      content: "",
+      author: (fm.author as string) ?? "Admin",
+      buyNowUrl: (fm.buyNowUrl as string) ?? undefined,
+      discountPercentage: (fm.discountPercentage as number) ?? undefined,
+      discountText: (fm.discountText as string) ?? undefined,
+    };
+  });
+};
